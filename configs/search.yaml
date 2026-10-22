@@ -1,0 +1,17 @@
+# sha256d target search preset
+target:
+  algo: sha256d
+  bits: 48
+nonce:
+  space: 2^64
+  block_size: 4294967296
+scheduler:
+  threads: 64
+  work_stealing: true
+  retry_limit: 3
+devices:
+  count: 8
+  kernel_block: 256
+  midstate_cache: true
+output:
+  results: results/

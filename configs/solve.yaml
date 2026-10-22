@@ -1,0 +1,20 @@
+# 27-point Poisson preset
+operator:
+  stencil: 27-point
+  dim: 2000000
+  boundary: dirichlet
+solver:
+  method: gmres
+  restart: 50
+  tol: 1.0e-10
+  maxiter: 800
+  orthogonalization: cgs2
+preconditioner:
+  type: amg
+  strength_theta: 0.08
+  smoother: jacobi
+  sweeps: 2
+  coarse_size: 500
+output:
+  checkpoint_every: 100
+  solution: out/x.bin

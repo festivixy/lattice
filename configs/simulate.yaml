@@ -1,0 +1,15 @@
+# plummer-sphere N-body preset
+particles: 1000000
+integrator: leapfrog
+dt: 1.0e-3
+box: 512.0
+tree:
+  method: barnes-hut
+  theta: 0.5
+  leaf_size: 16
+neighbors:
+  rcut: 2.5
+  skin: 0.3
+output:
+  snapshot_every: 500
+  format: hdf5
