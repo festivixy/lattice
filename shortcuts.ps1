@@ -1,14 +1,11 @@
-# One-word commands for the lattice jobs, loaded from the PowerShell profile.
-# `train 5m -vv` runs `python train.py --walltime 5m -vv` from any folder; a leading
-# duration (5m, 90s, 1h30m, 90, 00:05:00) becomes --walltime, everything else passes through.
+# One-word commands for the lattice jobs, loaded from the PowerShell profile (see install.ps1).
+# `train 30m -vv` or `train -30m -vv` runs train.py with a 30-minute walltime from any folder;
+# everything after the duration passes straight through.
 $LatticeDir = $PSScriptRoot
 
 function Invoke-Lattice($job, $rest) {
-    $rest = @($rest)
-    if ($rest.Count -gt 0 -and "$($rest[0])" -match '^(\d+(\.\d+)?[hms])+$|^\d+$|^\d+(:\d+){1,2}$') {
-        $rest = @('--walltime', "$($rest[0])") + @($rest | Select-Object -Skip 1)
-    }
-    python (Join-Path $LatticeDir "$job.py") @rest
+    $script = Join-Path $LatticeDir "$job.py"
+    if (Get-Command py -ErrorAction SilentlyContinue) { py -3 $script @rest } else { python $script @rest }
 }
 
 function train { Invoke-Lattice train $args }

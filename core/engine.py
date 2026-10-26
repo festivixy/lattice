@@ -38,6 +38,7 @@ EXIT_INTERRUPTED = 130
 
 _PARTIALS = " ▏▎▍▌▋▊▉"
 _UNIT_SECONDS = {"h": 3600, "m": 60, "s": 1}
+_LEADING_DURATION = re.compile(r"-?(?:(?:\d+(?:\.\d+)?[hms])+|\d+(?::\d+){0,2})", re.IGNORECASE)
 _TIMESTAMP = re.compile(r"^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d{3} ", re.MULTILINE)
 _FORMATTER = string.Formatter()
 
@@ -222,6 +223,9 @@ def parse_args(name: str, job: dict,
     parser.add_argument("--seed", type=_int_arg, default=None, help="run seed (default: random)")
     parser.add_argument("-v", "--verbose", action="count", default=0,
                         help="more output; repeat for debug-level logs")
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and _LEADING_DURATION.fullmatch(argv[0]):  # `train 30m` / `train -30m`
+        argv[:1] = ["--walltime", argv[0].lstrip("-")]
     args, unknown = parser.parse_known_args(argv)
     return args, _parse_extras(unknown)
 

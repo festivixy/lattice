@@ -10,7 +10,26 @@ N-body simulation, preconditioned sparse Krylov solves and hash-target search.
     python solve.py --dim 8e6 --tol 1e-12 --walltime 10m
     python search.py --bits 64 -vv
 
-Every script takes `--help` for its own flags.
+Every script takes `--help` for its own flags. Requires Python 3.10+, no other dependencies.
+
+## Shell commands
+
+Install once per machine to get `train`, `simulate`, `solve` and `search` in every new
+terminal. A leading duration sets the walltime:
+
+    train -30m -vv
+    simulate 10m
+
+Windows (PowerShell, from the repo folder):
+
+    Set-ExecutionPolicy -Scope CurrentUser RemoteSigned   # only if scripts are blocked
+    .\install.ps1
+
+macOS / Linux (zsh or bash):
+
+    sh install.sh
+
+Then open a new terminal. Re-running the installer is safe.
 
 ## Common flags
 
@@ -31,6 +50,7 @@ Other `--key value` flags (e.g. `--config configs/train.yaml`) pass through into
 | `core/jobs.py` | job definitions |
 | `src/` | model, N-body, Krylov and search kernels |
 | `configs/` | presets |
+| `install.ps1`, `install.sh`, `shortcuts.*` | shell commands |
 
 ## Tests
 

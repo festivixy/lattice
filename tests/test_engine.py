@@ -82,6 +82,17 @@ class ParseWalltimeTest(unittest.TestCase):
             engine.Session("train", ["--walltime", "soon"])
         self.assertIn("invalid walltime", err.getvalue())
 
+    def test_leading_duration_is_the_walltime_with_or_without_a_dash(self):
+        for first, seconds in (("30m", 1800), ("-30m", 1800), ("-90", 90), ("1:30", 90),
+                               ("-1h30m", 5400)):
+            with self.subTest(first=first):
+                args, _ = engine.parse_args("train", JOBS["train"], [first, "-vv"])
+                self.assertEqual((args.walltime, args.verbose), (seconds, 2))
+
+    def test_duration_later_in_the_line_is_not_taken_as_walltime(self):
+        args, extras = engine.parse_args("train", JOBS["train"], ["--seed", "30"])
+        self.assertEqual((args.walltime, args.seed), (engine.DEFAULT_WALLTIME, 30))
+
 
 class SessionTest(unittest.TestCase):
     def test_every_job_completes_and_every_template_renders(self):
