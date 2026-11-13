@@ -29,7 +29,8 @@ macOS / Linux (zsh or bash):
 
     sh install.sh
 
-Then open a new terminal. Re-running the installer is safe.
+Then open a new terminal. Re-running the installer is safe. It also installs the VS Code
+extension in `vscode/` when VS Code is installed; see `vscode/README.md`.
 
 ## Common flags
 
@@ -51,6 +52,7 @@ Other `--key value` flags (e.g. `--config configs/train.yaml`) pass through into
 | `src/` | model, N-body, Krylov and search kernels |
 | `configs/` | presets |
 | `install.ps1`, `install.sh`, `shortcuts.*` | shell commands |
+| `vscode/` | VS Code extension |
 
 ## Tests
 

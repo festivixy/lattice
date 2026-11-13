@@ -1,0 +1,65 @@
+{
+  "name": "lattice-typer",
+  "displayName": "Lattice Typer",
+  "description": "Mash keys, get real code: retypes your project's files one keypress at a time.",
+  "version": "0.1.0",
+  "publisher": "festivixy",
+  "private": true,
+  "repository": "https://github.com/festivixy/lattice",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onFileSystem:draft"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "latticeTyper.toggle",
+        "title": "Lattice Typer: Start / Stop"
+      },
+      {
+        "command": "latticeTyper.realTyping",
+        "title": "Lattice Typer: Switch Real Typing On / Off"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "latticeTyper.toggle",
+        "key": "ctrl+alt+y",
+        "mac": "ctrl+cmd+y"
+      },
+      {
+        "command": "latticeTyper.realTyping",
+        "key": "f12",
+        "when": "latticeTyper.active && resourceScheme == draft"
+      },
+      {
+        "command": "latticeTyper.backspace",
+        "key": "backspace",
+        "args": { "fallback": "deleteLeft" },
+        "when": "latticeTyper.active && !latticeTyper.real && editorTextFocus && resourceScheme == draft"
+      },
+      {
+        "command": "latticeTyper.backspace",
+        "key": "ctrl+z",
+        "mac": "cmd+z",
+        "args": { "fallback": "undo" },
+        "when": "latticeTyper.active && !latticeTyper.real && editorTextFocus && resourceScheme == draft"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node --test test/draft.test.js",
+    "test:vscode": "node test/integration/run.js",
+    "package": "vsce package --skip-license --out lattice-typer.vsix"
+  },
+  "devDependencies": {
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.2.1"
+  }
+}

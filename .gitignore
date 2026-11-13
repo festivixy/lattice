@@ -3,3 +3,5 @@ out/
 runs/
 checkpoints/
 results/
+node_modules/
+.vscode-test/
